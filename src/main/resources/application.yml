@@ -1,12 +1,5 @@
 spring:
-  h2:
-    console:
-      enabled: true
-  datasource:
-    generate-unique-name: false
-    name: users
-#  config:
-#    import: file:src/main/resources/env.properties
-
+  profiles:
+    active: dev
 
 

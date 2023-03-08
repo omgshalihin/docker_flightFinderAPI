@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "itineraries")
 public class Itinerary {
 
     @Id
     @Column(name = "flight_id")
     private String flight_id;
-
     @JsonProperty("departureAt")
     @Column(name = "flight_departureAt")
     private String flight_departureAt;
@@ -29,6 +29,6 @@ public class Itinerary {
     @Column(name = "flight_prices")
     @Embedded
     private Price flight_prices;
-//    @ManyToOne
-//    private Route route;
+
+
 }
