@@ -1,24 +1,32 @@
 package com.salt.flightFinderApi.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Route {
 
     @Id
-    private String routeId;
-    private String routeDepartureDestination;
-    private String routeArrivalDestination;
-    @OneToMany(targetEntity = Flight.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_flight_fk", referencedColumnName = "routeId")
-    private List<Flight> flights;
-
+    @Column(name = "route_id")
+    private String route_id;
+    @JsonProperty("departureDestination")
+    @Column(name = "route_departureDestination")
+    private String route_departureDestination;
+    @JsonProperty("arrivalDestination")
+    @Column(name = "route_arrivalDestination")
+    private String route_arrivalDestination;
+    @JsonProperty("itineraries")
+    @Column(name = "route_itineraries")
+    @OneToMany(targetEntity = Itinerary.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_itinerary_fk", referencedColumnName = "route_id")
+    private List<Itinerary> route_itineraries;
 
 }
+
+
