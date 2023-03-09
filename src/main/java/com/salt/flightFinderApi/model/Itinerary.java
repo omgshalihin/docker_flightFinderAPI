@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -18,10 +21,11 @@ public class Itinerary {
     private String flight_id;
     @JsonProperty("departureAt")
     @Column(name = "flight_departureAt")
-    private String flight_departureAt;
+    private Date flight_departureAt;
+
     @JsonProperty("arrivalAt")
     @Column(name = "flight_arrivalAt")
-    private String flight_arrivalAt;
+    private Date flight_arrivalAt;
     @JsonProperty("availableSeats")
     @Column(name = "flight_availableSeats")
     private int flight_availableSeats;
