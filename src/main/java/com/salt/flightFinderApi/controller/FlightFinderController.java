@@ -1,6 +1,7 @@
 package com.salt.flightFinderApi.controller;
 
 import com.salt.flightFinderApi.dto.JointRoutesItinerariesDto;
+import com.salt.flightFinderApi.model.Itinerary;
 import com.salt.flightFinderApi.model.Route;
 import com.salt.flightFinderApi.repository.RouteRepository;
 import com.salt.flightFinderApi.service.FlightFinderService;
@@ -50,6 +51,14 @@ public class FlightFinderController {
             @PathVariable(name = "arrivalTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date arrivalTime
     ) {
         return flightFinderService.getAvailableFlightsBetween2LocationsAndDepartureDateAndTime(from, to, departureTime, arrivalTime);
+    }
+
+    @PatchMapping("/bookings/{flightId}")
+    public Itinerary bookFlight (
+            @PathVariable(name = "flightId") String flightId,
+            @RequestParam(name = "seats") String seats
+            ) {
+        return flightFinderService.bookFlight(flightId, seats);
     }
 
 

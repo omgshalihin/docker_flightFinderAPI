@@ -45,4 +45,11 @@ public class FlightFinderService {
     public List<JointRoutesItinerariesDto> getAvailableFlightsBetween2LocationsAndDepartureDateAndTime(String from, String to, Date departureTime, Date arrivalTime) {
         return routeRepository.getAvailableFlightsBetween2LocationsAndDepartureDateAndTime(from, to, departureTime, arrivalTime);
     }
+
+    public Itinerary bookFlight(String flightId, String seats) {
+
+        var a = itineraryRepository.findById(flightId).get();
+        a.setFlight_availableSeats(a.getFlight_availableSeats() - Integer.parseInt(seats));
+        return itineraryRepository.save(a);
+    }
 }

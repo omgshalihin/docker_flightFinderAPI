@@ -8,7 +8,6 @@ select * from itineraries i
 inner join routes r on r.route_id = i.route_itinerary_fk
 where r.route_departure_destination ilike 'oslo' and r.route_arrival_destination ilike 'stockholm' and i.flight_departure_at >= '2023-03-28 22:00:00' and i.flight_arrival_at <= '2023-04-01 02:00:00';
 
-
 -- (required) User should be able to book a flight
 -- (required) Error checking for invalid bookings (Not enough seating, etc)
 -- (required) Have flights with layovers. You should then connect existing flights with each other,
