@@ -25,5 +25,15 @@ public interface RouteRepository extends JpaRepository<Route, String> {
             @Param("to") String to,
             @Param("departureTime") Date departureTime,
             @Param("arrivalTime") Date arrivalTime);
+
+    @Query("SELECT new com.salt.flightFinderApi.dto.JointRoutesItinerariesDto(i.flight_id, i.flight_departureAt, i.flight_arrivalAt, i.flight_availableSeats, i.flight_prices, r.route_id, r.route_departureDestination, r.route_arrivalDestination) FROM Route r JOIN r.route_itineraries i WHERE r.route_departureDestination ilike :from")
+    List<JointRoutesItinerariesDto> getJointRoutesByDeparture(@Param("from") String from);
+
+    @Query("SELECT new com.salt.flightFinderApi.dto.JointRoutesItinerariesDto(i.flight_id, i.flight_departureAt, i.flight_arrivalAt, i.flight_availableSeats, i.flight_prices, r.route_id, r.route_departureDestination, r.route_arrivalDestination) FROM Route r JOIN r.route_itineraries i WHERE r.route_arrivalDestination ilike :to")
+    List<JointRoutesItinerariesDto> getJointRoutesByArrival(@Param("to") String to);
+
+    @Query("SELECT new com.salt.flightFinderApi.dto.JointRoutesItinerariesDto(i.flight_id, i.flight_departureAt, i.flight_arrivalAt, i.flight_availableSeats, i.flight_prices, r.route_id, r.route_departureDestination, r.route_arrivalDestination) FROM Route r JOIN r.route_itineraries i WHERE r.route_departureDestination ilike :from OR r.route_arrivalDestination ilike :to")
+    List<JointRoutesItinerariesDto> getAvailableFlightsBetween2LocationsWithLayovers(@Param("from") String from, @Param("to") String to);
+
 }
 

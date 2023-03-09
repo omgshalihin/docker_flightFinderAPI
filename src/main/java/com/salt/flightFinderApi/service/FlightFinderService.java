@@ -35,12 +35,14 @@ public class FlightFinderService {
 
 
     public List<JointRoutesItinerariesDto> getAvailableFlightsBetween2Locations(String from, String to) {
-        return routeRepository.getAvailableFlightsBetween2Locations(from, to);
-    }
 
-//    public List<JointRoutesItinerariesDto> getAvailableFlightsBetween2LocationsAndDepartureDate(String from, String to, String depart) {
-//        return routeRepository.getAvailableFlightsBetween2LocationsAndDepartureDate(from, to, depart);
-//    }
+        if (routeRepository.getAvailableFlightsBetween2Locations(from, to).size() == 0) {
+            return routeRepository.getAvailableFlightsBetween2LocationsWithLayovers(from, to);
+
+        } else {
+            return routeRepository.getAvailableFlightsBetween2Locations(from, to);
+        }
+    }
 
     public List<JointRoutesItinerariesDto> getAvailableFlightsBetween2LocationsAndDepartureDateAndTime(String from, String to, Date departureTime, Date arrivalTime) {
         return routeRepository.getAvailableFlightsBetween2LocationsAndDepartureDateAndTime(from, to, departureTime, arrivalTime);
@@ -48,8 +50,16 @@ public class FlightFinderService {
 
     public Itinerary bookFlight(String flightId, String seats) {
 
-        var a = itineraryRepository.findById(flightId).get();
-        a.setFlight_availableSeats(a.getFlight_availableSeats() - Integer.parseInt(seats));
-        return itineraryRepository.save(a);
+        Itinerary itinerary = itineraryRepository.findById(flightId).get();
+
+        if (itinerary.getFlight_availableSeats() < Integer.parseInt(seats)) {
+            itinerary.setFlight_availableSeats(itinerary.getFlight_availableSeats());
+            throw new IllegalArgumentException("Not enough seating");
+        } else {
+            itinerary.setFlight_availableSeats(itinerary.getFlight_availableSeats() - Integer.parseInt(seats));
+        }
+        return itineraryRepository.save(itinerary);
+
+
     }
 }

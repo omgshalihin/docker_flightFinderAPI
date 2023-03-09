@@ -22,7 +22,6 @@ public class Itinerary {
     @JsonProperty("departureAt")
     @Column(name = "flight_departureAt")
     private Date flight_departureAt;
-
     @JsonProperty("arrivalAt")
     @Column(name = "flight_arrivalAt")
     private Date flight_arrivalAt;
